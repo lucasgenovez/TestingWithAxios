@@ -56,8 +56,8 @@ const put = async () => {
 const patch = async () => {
     try {
         //Patching a resouce
-        const data = {           
-            title: 'LaraVue'           
+        const data = {
+            title: 'LaraVue'
         };
 
         const response = await axios.put('https://jsonplaceholder.typicode.com/posts/1', data);
@@ -71,8 +71,8 @@ const patch = async () => {
 const del = async () => {
     try {
         //Patching a resouce
-        const data = {           
-            title: 'LaraVue'           
+        const data = {
+            title: 'LaraVue'
         };
 
         const response = await axios.delete('https://jsonplaceholder.typicode.com/posts/2', data);
@@ -83,12 +83,46 @@ const del = async () => {
     }
 }
 
-const multiple = () => {
-    console.log('multiple');
+const multiple = async () => {
+    try {
+        const response = await Promise.all([
+            axios.get('https://jsonplaceholder.typicode.com/posts'),
+            axios.get('https://jsonplaceholder.typicode.com/users')
+        ]);
+
+        console.table(response[0].data);
+        console.table(response[1].data);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-const transform = () => {
-    console.log('transform');
+const transform = async () => {
+    try {
+        const config = {
+            params: {
+                _limit: 2
+            },
+            transformResponse: [function (data) {
+                const payload = JSON.parse(data).map(p => {
+                    return {
+                        ...p,
+                        fisrt_name: 'Lucas',
+                        last_name: 'Genovez',
+                        full_name: 'Lucas Genovez'
+                    }
+                });
+
+                return payload;
+            }],
+        };
+
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', config);
+
+        renderOutput(response);
+    } catch (error) {
+        renderOutput(error);
+    }
 }
 
 const errorHandling = () => {

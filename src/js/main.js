@@ -38,13 +38,23 @@ const post = async () => {
 const put = async () => {
     try {
         //Updating a resource
-        // const data = {
-        //     id: 1,
-        //     title: 'foo',
-        //     body: 'bar',
-        //     userId: 1,
-        // };
+        const data = {
+            id: 1,
+            title: 'foo',
+            body: 'bar',
+            userId: 1,
+        };
 
+        const response = await axios.put('https://jsonplaceholder.typicode.com/posts/1', data);
+
+        renderOutput(response);
+    } catch (error) {
+        renderOutput(error);
+    }
+}
+
+const patch = async () => {
+    try {
         //Patching a resouce
         const data = {           
             title: 'LaraVue'           
@@ -58,12 +68,19 @@ const put = async () => {
     }
 }
 
-const patch = () => {
-    console.log('patch');
-}
+const del = async () => {
+    try {
+        //Patching a resouce
+        const data = {           
+            title: 'LaraVue'           
+        };
 
-const del = () => {
-    console.log('delete');
+        const response = await axios.delete('https://jsonplaceholder.typicode.com/posts/2', data);
+
+        renderOutput(response);
+    } catch (error) {
+        renderOutput(error);
+    }
 }
 
 const multiple = () => {

@@ -3,6 +3,9 @@ const dataEl = document.getElementById('data');
 const headersEl = document.getElementById('headers');
 const configEl = document.getElementById('config');
 
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
 axios.interceptors.request.use(function(config) {
     config.headers.common.Authorization = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
     return config;
@@ -27,7 +30,7 @@ const get = async () => {
             }
         };
 
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', config);
+        const response = await axios.get('/posts', config);
 
         renderOutput(response);
     } catch (error) {
@@ -43,7 +46,7 @@ const post = async () => {
             userId: 1,
         };
 
-        const response = await axios.post('https://jsonplaceholder.typicode.com/posts', data);
+        const response = await axios.post('/posts', data);
 
         renderOutput(response);
     } catch (error) {
@@ -61,7 +64,7 @@ const put = async () => {
             userId: 1,
         };
 
-        const response = await axios.put('https://jsonplaceholder.typicode.com/posts/1', data);
+        const response = await axios.put('/posts/1', data);
 
         renderOutput(response);
     } catch (error) {
@@ -76,7 +79,7 @@ const patch = async () => {
             title: 'LaraVue'
         };
 
-        const response = await axios.put('https://jsonplaceholder.typicode.com/posts/1', data);
+        const response = await axios.put('/posts/1', data);
 
         renderOutput(response);
     } catch (error) {
@@ -91,7 +94,7 @@ const del = async () => {
             title: 'LaraVue'
         };
 
-        const response = await axios.delete('https://jsonplaceholder.typicode.com/posts/2', data);
+        const response = await axios.delete('/posts/2', data);
 
         renderOutput(response);
     } catch (error) {
@@ -102,8 +105,8 @@ const del = async () => {
 const multiple = async () => {
     try {
         const response = await Promise.all([
-            axios.get('https://jsonplaceholder.typicode.com/posts'),
-            axios.get('https://jsonplaceholder.typicode.com/users')
+            axios.get('/posts'),
+            axios.get('/users')
         ]);
 
         console.table(response[0].data);
@@ -133,7 +136,7 @@ const transform = async () => {
             }],
         };
 
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', config);
+        const response = await axios.get('/posts', config);
 
         renderOutput(response);
     } catch (error) {
@@ -149,7 +152,7 @@ const errorHandling = () => {
         }
     };
 
-    axios.get('https://jsonplaceholder.typicode.com/postsr', config)
+    axios.get('/postsr', config)
         .then((response) => renderOutput(response))
         .catch((error) =>  renderOutput(error.response));
 }
@@ -162,7 +165,7 @@ const cancel = () => {
         },
         signal: controller.signal
     };
-    axios.get('https://jsonplaceholder.typicode.com/posts', config)
+    axios.get('/posts', config)
         .then((response) => renderOutput(response))
         .catch((e) => {
             console.log(e.message);

@@ -125,8 +125,17 @@ const transform = async () => {
     }
 }
 
-const errorHandling = () => {
-    console.log('errorHandling');
+const errorHandling = async () => {
+
+    const config = {
+        params: {
+            _limit: 2
+        }
+    };
+
+    await axios.get('https://jsonplaceholder.typicode.com/postsr', config)
+        .then((response) => renderOutput(response))
+        .catch((error) =>  renderOutput(error.response));
 }
 
 const cancel = () => {

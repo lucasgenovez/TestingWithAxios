@@ -5,14 +5,14 @@ const configEl = document.getElementById('config');
 
 const get = async () => {
     try {
-        const config =  {
+        const config = {
             params: {
                 _limit: 2
             }
         };
 
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts',config);
-        
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', config);
+
         renderOutput(response);
     } catch (error) {
         renderOutput(error);
@@ -33,11 +33,29 @@ const post = async () => {
     } catch (error) {
         renderOutput(error);
     }
-    //console.log('post');
 }
 
-const put = () => {
-    console.log('put');
+const put = async () => {
+    try {
+        //Updating a resource
+        // const data = {
+        //     id: 1,
+        //     title: 'foo',
+        //     body: 'bar',
+        //     userId: 1,
+        // };
+
+        //Patching a resouce
+        const data = {           
+            title: 'LaraVue'           
+        };
+
+        const response = await axios.put('https://jsonplaceholder.typicode.com/posts/1', data);
+
+        renderOutput(response);
+    } catch (error) {
+        renderOutput(error);
+    }
 }
 
 const patch = () => {

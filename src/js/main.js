@@ -5,19 +5,35 @@ const configEl = document.getElementById('config');
 
 const get = async () => {
     try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+        const config =  {
             params: {
                 _limit: 2
             }
-        })
+        };
+
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts',config);
+        
         renderOutput(response);
     } catch (error) {
         renderOutput(error);
     }
 }
 
-const post = () => {
-    console.log('post');
+const post = async () => {
+    try {
+        const data = {
+            title: 'foo',
+            body: 'bar',
+            userId: 1,
+        };
+
+        const response = await axios.post('https://jsonplaceholder.typicode.com/posts', data);
+
+        renderOutput(response);
+    } catch (error) {
+        renderOutput(error);
+    }
+    //console.log('post');
 }
 
 const put = () => {

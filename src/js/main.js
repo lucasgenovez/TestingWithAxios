@@ -3,8 +3,17 @@ const dataEl = document.getElementById('data');
 const headersEl = document.getElementById('headers');
 const configEl = document.getElementById('config');
 
-const get = () => {
-    console.log('get');
+const get = async () => {
+    try {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+            params: {
+                _limit: 2
+            }
+        })
+        renderOutput(response);
+    } catch (error) {
+        renderOutput(error);
+    }
 }
 
 const post = () => {

@@ -3,6 +3,22 @@ const dataEl = document.getElementById('data');
 const headersEl = document.getElementById('headers');
 const configEl = document.getElementById('config');
 
+axios.interceptors.request.use(function(config) {
+    config.headers.common.Authorization = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+    return config;
+}, function (error) {
+    console.log('error');
+    return Promise.reject(error);
+});
+
+axios.interceptors.response.use(function (response) {
+    console.log('sucesso');
+    return response;
+}, function (error) {
+    console.log(error.response);
+    return Promise.reject(error);
+});
+
 const get = async () => {
     try {
         const config = {
@@ -125,7 +141,7 @@ const transform = async () => {
     }
 }
 
-const errorHandling = async () => {
+const errorHandling = () => {
 
     const config = {
         params: {
@@ -133,13 +149,26 @@ const errorHandling = async () => {
         }
     };
 
-    await axios.get('https://jsonplaceholder.typicode.com/postsr', config)
+    axios.get('https://jsonplaceholder.typicode.com/postsr', config)
         .then((response) => renderOutput(response))
         .catch((error) =>  renderOutput(error.response));
 }
 
 const cancel = () => {
-    console.log('cancel');
+    const controller = new AbortController();
+    const config = {
+        params: {
+            _limit: 5
+        },
+        signal: controller.signal
+    };
+    axios.get('https://jsonplaceholder.typicode.com/posts', config)
+        .then((response) => renderOutput(response))
+        .catch((e) => {
+            console.log(e.message);
+        })
+
+    controller.abort()
 }
 
 const clear = () => {
